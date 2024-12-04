@@ -1,0 +1,41 @@
+# Python bytecode files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+*.env
+
+# Flask instance folder
+instance/
+
+# Flask specific
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE and editor settings
+.vscode/
+.idea/
+
+# .env files for sensitive data
+.env
+
+# PyCharm
+.idea/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# MySQL and SQLite databases
+*.db
+*.sqlite3
+
+# Docker
+docker-compose.override.yml
+Dockerfile*
+*.dockerignore

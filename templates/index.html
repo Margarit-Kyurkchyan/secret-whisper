@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<head><title>Burn After Reading</title></head>
+<body>
+  <h2>Enter a Secret:</h2>
+  <form method="POST">
+    <textarea name="secret" required></textarea><br>
+    <button type="submit">Generate Link</button>
+  </form>
+  {% if secret_link %}
+  <h3>Share this link:</h3>
+  <p><a href="{{ secret_link }}">{{ secret_link }}</a></p>
+  {% endif %}
+</body>
+</html>
