@@ -1,17 +1,34 @@
-from flask import Flask, request, render_template, redirect, url_for, session, abort
-from werkzeug.security import generate_password_hash, check_password_hash
 import uuid
 
+from flask import Flask, request, render_template, redirect, url_for, session, abort
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+
 app = Flask(__name__)
-app.secret_key = '9df31cad3eb2f66386575da6dd664d4s'  # Change this to a secure key
 
-# In-memory storage for users and secrets
-users = {}
-secrets = {}
+# Configure the app
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+
+# Initialize the database
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 
-# Route for registration
-# Route for registration
+# Define the User model
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password_hash = db.Column(db.String(512), nullable=False)
+
+
+# Define routes (register, login, etc.)
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -22,28 +39,34 @@ def register():
         if password != confirm_password:
             return "Passwords do not match. Please try again."
 
-        if username in users:
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
             return "Username already exists. Try another."
 
         hashed_password = generate_password_hash(password)
-        users[username] = hashed_password
+        new_user = User(username=username, password_hash=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+
         return redirect(url_for("login"))
 
     return render_template("register.html")
 
 
-# Route for login
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        stored_password = users.get(username)
 
-        if stored_password and check_password_hash(stored_password, password):
+        user = User.query.filter_by(username=username).first()
+
+        if user and check_password_hash(user.password_hash, password):
             session["username"] = username
             return redirect(url_for("index"))
+
         return "Invalid credentials. Please try again."
+
     return render_template("login.html")
 
 
@@ -52,6 +75,10 @@ def login():
 def logout():
     session.pop("username", None)
     return redirect(url_for("login"))
+
+
+# In-memory storage for secrets
+secrets = {}
 
 
 # Home page route
