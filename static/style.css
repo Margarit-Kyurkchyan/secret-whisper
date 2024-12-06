@@ -9,6 +9,93 @@ body {
     margin: 0;
 }
 
+/* Navigation Bar */
+.nav {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    text-align: right;
+}
+
+.nav p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.nav .nav-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.nav .nav-button:hover {
+    background-color: #45a049;
+}
+
+/* Secret Page Styles */
+.secret-box {
+    background-color: #f9f9f9;
+    border: 2px dashed #4CAF50;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.secret {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+.message-destroyed {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.back-link {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.8rem 1.2rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.back-link:hover {
+    background-color: #45a049;
+}
+
+
+/* Fire Icon Styling */
+.fire-icon {
+    color: #FF4500; /* Bright orange to resemble fire */
+    margin-right: 0.5rem; /* Adds spacing between the icon and the text */
+    margin-bottom: 1rem;
+    font-size: 1.2rem; /* Adjust icon size */
+}
+
+/* Adjust Message Styling */
+.message-destroyed {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center; /* Align icon and text */
+    justify-content: center; /* Center horizontally */
+}
+
+
 /* Form Container */
 .container {
     background-color: #ffffff;

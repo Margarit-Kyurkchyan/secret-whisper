@@ -84,9 +84,6 @@ secrets = {}
 # Home page route
 @app.route("/", methods=["GET", "POST"])
 def index():
-    if "username" not in session:
-        return redirect(url_for("login"))
-
     if request.method == "POST":
         secret_message = request.form["secret"]
         secret_id = str(uuid.uuid4())
@@ -100,9 +97,6 @@ def index():
 # Route to reveal the secret
 @app.route("/secret/<secret_id>")
 def reveal_secret(secret_id):
-    if "username" not in session:
-        return redirect(url_for("login"))
-
     secret_message = secrets.pop(secret_id, None)
     if secret_message is None:
         abort(404)  # Secret not found or already viewed
